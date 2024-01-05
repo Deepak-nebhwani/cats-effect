@@ -46,7 +46,8 @@ object Effects {
     example: Future is NOT an effect type
     - describes an asynchronous computation
     - computes a value of type A, if it's successful
-    - side effect is required (allocating/scheduling a thread), execution is NOT separate from construction
+    - side effect is required (allocating/scheduling a thread), execution is NOT separate from construction,
+    it will start execution eagerly whenever instantiation of future is done.
    */
   import scala.concurrent.ExecutionContext.Implicits.global
   val aFuture: Future[Int] = Future(42)

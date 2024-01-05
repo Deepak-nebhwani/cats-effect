@@ -6,13 +6,29 @@ import scala.io.StdIn
 
 object IOIntroduction {
 
+  /**
+   * https://typelevel.org/cats-effect/api/3.x/cats/effect/IO.html
+   */
   // IO
   val ourFirstIO: IO[Int] = IO.pure(42) // arg that should not have side effects
+
+// does not delay computation
+// call by value signature will make it eager
+//  def pure[A](value: A): IO[A]
+//  val eagerIO: IO[Int] = IO.pure {
+//    println("I'm producing an integer")
+//    54
+//  }
+
+// call by name signature will make it lazy
+  // def delay[A](thunk: => A): IO[A]
+
   val aDelayedIO: IO[Int] = IO.delay {
     println("I'm producing an integer")
     54
   }
 
+// if you are not sure computation will produce side effect or not just use this instead of pure
   val aDelayedIO_v2: IO[Int] = IO { // apply == delay
     println("I'm producing an integer")
     54
@@ -114,6 +130,7 @@ object IOIntroduction {
   def main(args: Array[String]): Unit = {
     import cats.effect.unsafe.implicits.global // "platform"
     // "end of the world"
-    (1 to 100).foreach(i => println(fibonacci(i).unsafeRunSync()))
+//    (1 to 100).foreach(i => println(fibonacci(i).unsafeRunSync()))
+    forever_v2(IO("testing!")).unsafeRunSync()
   }
 }

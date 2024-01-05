@@ -52,9 +52,10 @@ object IOTraversal extends IOApp.Simple {
    * Exercises
    */
   // hint: use Traverse API
+  // x => x is known as identity in scala
   def sequence[A](listOfIOs: List[IO[A]]): IO[List[A]] =
     listTraverse.traverse(listOfIOs)(x => x)
-
+//  listTraverse.traverse(listOfIOs)(identity)
   // hard version
   def sequence_v2[F[_] : Traverse, A](wrapperOfIOs: F[IO[A]]): IO[F[A]] =
     Traverse[F].traverse(wrapperOfIOs)(x => x)

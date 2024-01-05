@@ -22,10 +22,13 @@ object RacingIOs extends IOApp.Simple {
     val meaningOfLife = runWithSleep(42, 1.second)
     val favLang = runWithSleep("Scala", 2.seconds)
     val first: IO[Either[Int, String]] = IO.race(meaningOfLife, favLang)
-    /*
+    /**
+     * 1. `IO.race(io1, io2)` or `io1.race(io2)`
+     *
       - both IOs run on separate fibers
       - the first one to finish will complete the result
-      - the loser will be canceled
+      - the loser will get cancel signal, it will be canceled.
+      - return type will be `Either[io1ResultType, io2ResultType]`
      */
 
     first.flatMap {
@@ -34,6 +37,17 @@ object RacingIOs extends IOApp.Simple {
     }
   }
 
+  /**
+   * 2. `IO.racePair(io1, io2)` or `io1.racePair(io2)`
+   * - both IOs run on separate fibers
+   * Return Type contain Result type `Either[(io1Outcomes, io2Fiber),(io1Fiber, io2Outcomes)]`
+   * It will not cancel the loser fiber, so we have more control over the loser fiber,
+   * so we can `join` and block the slower fiber to wait until it finish with result outcomes,
+   * even if we want we can send the cancel signal to the slower fiber to cancel it's operation.
+   * faster fiber will results first in form of outcomes, so we can check whether result of faster IO is succeeded, errored or cancelled
+   *
+   *
+   */
   def testRacePair() = {
     val meaningOfLife = runWithSleep(42, 1.second)
     val favLang = runWithSleep("Scala", 2.seconds)
@@ -65,8 +79,15 @@ object RacingIOs extends IOApp.Simple {
     }
   }
 
+  def timeOut_v2[A](ioa: IO[A], duration: FiniteDuration): IO[Either[A, Unit]] = {
+    ioa
+      .onCancel(IO.raiseError(new RuntimeException(s"IO has been timeout after $duration")))
+      .race(IO.sleep(duration))
+  }
+
+
   val importantTask = IO.sleep(2.seconds) >> IO(42).debug
-  val testTimeout = timeout(importantTask, 1.seconds)
+  val testTimeout = timeOut_v2(importantTask, 1.seconds)
   val testTimeout_v2 = importantTask.timeout(1.seconds)
 
   // 2
@@ -107,5 +128,5 @@ object RacingIOs extends IOApp.Simple {
       }
     }
 
-  override def run = testRace().debug.void
+  override def run = testTimeout.debug.void
 }

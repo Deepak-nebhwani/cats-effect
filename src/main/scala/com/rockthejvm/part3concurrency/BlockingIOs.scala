@@ -9,6 +9,10 @@ import scala.concurrent.duration.*
 
 object BlockingIOs extends IOApp.Simple {
 
+  /**
+   *
+   */
+
   val someSleeps = for {
     _ <- IO.sleep(1.second).debug // SEMANTIC BLOCKING - no threads are actually blocked, CE assigns this thread to some other fiber
     _ <- IO.sleep(1.second).debug

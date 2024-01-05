@@ -20,13 +20,28 @@ object TestApp {
   }
 }
 
+/**
+ * IOApp is trait which provide run method to be implemented and will be a starting point of an application
+ */
+
+/**
+ * A simple App which override run method that takes List of runtime arguments and return IO[ExitCode]
+ * there are two ExitCode, one is success and second is error
+ */
 object FirstCEApp extends IOApp {
   import IOApps._
 
   override def run(args: List[String]) =
     program.as(ExitCode.Success)
+
 }
 
+/**
+ * A simple App which override run method that doesn't take any argument and return IO[Unit]
+ * our program also returning IO[Unit]
+ * just use .void function on any IO it will return the IO[Unit]
+ * 
+ */
 object MySimpleApp extends IOApp.Simple {
   import IOApps._
 

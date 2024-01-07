@@ -99,7 +99,42 @@ Imports:
 if any one computation is failing in tuple the overall output will be failure one, like None, Left(), Future(Failure())
 
 
-Qua: what are the available Finalizers just like finally block 
+#### Qua: what are the available Finalizers just like finally block 
 * someIO.onCancel <--- it will only called when the fiber containing this IO will receive cancel signal
 * someIO.bracket(useFunction)(releaseFunction) <---- releaseFunction will always get call (after success, failure or cancel)
 * 
+
+
+#### Qua: What is callback function
+#### Ans: [click to go on this page AsyncIO.md](AsyncIO.md)
+
+#### Que: What is caller vs callee functions 
+
+
+#### Caller vs. Callee Functions
+
+In computer programming, caller and callee functions designate the roles functions play in the execution process:
+
+#### Caller Function
+* Initiates the execution of another function (callee).
+* Prepares arguments, pushes them onto the stack (if applicable), and jumps to the callee's entry point.
+* Resumes execution after the callee returns.
+#### Responsibilities:
+* Argument preparation
+* Stack management (potentially)
+* Error handling
+#### Callee Function
+* Function being called by another function (caller).
+* Receives arguments, performs a task, and returns a result (or void).
+#### Responsibilities:
+* Argument processing
+* Task execution
+* Return value (or void)
+
+#### Analogy:
+
+Here's an analogy to understand the concept:
+
+* Think of the caller as a restaurant manager taking your order (call) and delivering it to the chef (callee).
+* The manager (caller) gathers the ingredients (arguments), sends them to the chef, and waits for the meal (return value).
+* The chef (callee) receives the ingredients, prepares the dish (executes the task), and sends it back to the manager.e as chef: Receives ingredients, prepares the dish (executes the task), and sends it back to the manager.

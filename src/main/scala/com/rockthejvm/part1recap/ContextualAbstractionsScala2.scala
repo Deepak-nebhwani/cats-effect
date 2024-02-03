@@ -42,7 +42,8 @@ object ContextualAbstractionsScala2 {
   val davidsJson = convert2Json(Person("David")) // implicit serializer passed here
 
   // implicit defs
-  implicit def createListSerializer[T](implicit serializer: JSONSerializer[T]): JSONSerializer[List[T]] =
+  implicit def createListSerializer[T](implicit
+      serializer: JSONSerializer[T]): JSONSerializer[List[T]] =
     new JSONSerializer[List[T]] {
       override def toJson(list: List[T]) = s"[${list.map(serializer.toJson).mkString(",")}]"
     }
@@ -93,7 +94,7 @@ object TypeClassesScala2 {
     serializer.toJson(value)
 
   def convertListToJson[T](list: List[T])(implicit serializer: JSONSerializer[T]): String =
-    list.map(value => serializer.toJson(value)).mkString("[",",","]")
+    list.map(value => serializer.toJson(value)).mkString("[", ",", "]")
 
   // part 4 - add extension methods
   object JSONSyntax {

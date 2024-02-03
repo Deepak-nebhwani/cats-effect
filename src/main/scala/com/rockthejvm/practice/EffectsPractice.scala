@@ -3,9 +3,7 @@ package com.rockthejvm.practice
 object EffectsPractice extends App {
 
   // instantiation of MyIO, it will not start anything, opposite to future where execution start as soon as we instantiate
-  val myIO = MyIO(() => println(("Hello Example")))
-
-
+  val myIO = MyIO(() => println("Hello Example"))
 
   // once we will call it will start execution
   myIO.unsafeRun()
@@ -39,7 +37,6 @@ object EffectsPractice extends App {
   //1. An IO which returns the current time of the system
   case class CurrentTimeIo(currentTime: () => Long = () => System.currentTimeMillis())
 
-
   // 2. An IO which measures the duration of a computation (hint: use ex 1)
 
   val time: MyIO[Long] = MyIO[Long](() => System.currentTimeMillis())
@@ -61,12 +58,9 @@ object EffectsPractice extends App {
     time.flatMap(start => computation.flatMap(_ => time.map(end => end - start)))
 
 //Usage
- println( measure2(MyIO(() => {
+  println(measure2(MyIO(() => {
 //    Thread.sleep(5)
     println("compute Finish")
   })).unsafeRun())
 
 }
-
-
-

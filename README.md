@@ -2,7 +2,9 @@
 
 Powered by [Rock the JVM!](rockthejvm.com)
 
-This repository contains the code we wrote during the Rock the JVM [Cats Effect course](https://rockthejvm.com/p/cats-effect). Unless explicitly mentioned, the code in this repository is exactly what was caught on camera.
+This repository contains the code we wrote during the Rock the
+JVM [Cats Effect course](https://rockthejvm.com/p/cats-effect). Unless explicitly mentioned, the code in this repository
+is exactly what was caught on camera.
 
 ### Install and setup
 
@@ -18,7 +20,9 @@ Start by cloning this repository and checkout the `start` tag:
 git checkout start
 ```
 
-The repository has tags for intermediate states of the code. This is useful to keep track of course progress, and particularly for the harder exercises where we modify the same code. To revert to that state of the code, all you have to do is `git checkout (the respective tag)`. The tags are as follows:
+The repository has tags for intermediate states of the code. This is useful to keep track of course progress, and
+particularly for the harder exercises where we modify the same code. To revert to that state of the code, all you have
+to do is `git checkout (the respective tag)`. The tags are as follows:
 
 * `start`
 * `1.1-scala-recap`
@@ -68,6 +72,7 @@ git checkout master
 ### For questions or suggestions
 
 If you have changes to suggest to this repo, either
+
 - submit a GitHub issue
 - tell me in the course Q/A forum
 - submit a pull request!

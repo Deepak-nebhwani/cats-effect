@@ -21,7 +21,7 @@ object Effects {
 
   // example: change a variable
   var anInt = 0
-  val changingVar: Unit = (anInt += 1)
+  val changingVar: Unit = anInt += 1
   val changingVar_v2: Unit = () // not the same
 
   // side effects are inevitable for useful programs
@@ -52,7 +52,6 @@ object Effects {
   import scala.concurrent.ExecutionContext.Implicits.global
   val aFuture: Future[Int] = Future(42)
 
-
   /*
     example: MyIO data type from the Monads lesson - it IS an effect type
     - describes any computation that might produce side effects
@@ -73,13 +72,12 @@ object Effects {
     42
   })
 
-  /**
-   *  Exercises
-   *  1. An IO which returns the current time of the system
-   *  2. An IO which measures the duration of a computation (hint: use ex 1)
-   *  3. An IO which prints something to the console
-   *  4. An IO which reads a line (a string) from the std input
-   */
+  /**  Exercises
+    *  1. An IO which returns the current time of the system
+    *  2. An IO which measures the duration of a computation (hint: use ex 1)
+    *  3. An IO which prints something to the console
+    *  4. An IO which reads a line (a string) from the std input
+    */
 
   // 1
   val clock: MyIO[Long] = MyIO(() => System.currentTimeMillis())

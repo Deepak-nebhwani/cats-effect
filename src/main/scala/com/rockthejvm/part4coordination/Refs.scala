@@ -33,7 +33,7 @@ object Refs extends IOApp.Simple {
 
   val updatedMol: IO[Int] = atomicMol.flatMap { ref =>
     ref.updateAndGet(value => value * 10) // get the new value
-    // can also use getAndUpdate to get the OLD value
+  // can also use getAndUpdate to get the OLD value
   }
 
   // modifying with a function returning a different type
@@ -88,9 +88,8 @@ object Refs extends IOApp.Simple {
     } yield ()
   }
 
-  /**
-   * Exercise
-   */
+  /** Exercise
+    */
   def tickingClockImpure(): IO[Unit] = {
     var ticks: Long = 0L
     def tickingClock: IO[Unit] = for {

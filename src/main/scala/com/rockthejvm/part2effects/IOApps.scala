@@ -5,7 +5,7 @@ import cats.effect.{ExitCode, IO, IOApp}
 import scala.io.StdIn
 
 object IOApps {
-  val program = for {
+  val program: IO[Unit] = for {
     line <- IO(StdIn.readLine())
     _ <- IO(println(s"You've just written: $line"))
   } yield ()
@@ -20,14 +20,12 @@ object TestApp {
   }
 }
 
-/**
- * IOApp is trait which provide run method to be implemented and will be a starting point of an application
- */
+/** IOApp is trait which provide run method to be implemented and will be a starting point of an application
+  */
 
-/**
- * A simple App which override run method that takes List of runtime arguments and return IO[ExitCode]
- * there are two ExitCode, one is success and second is error
- */
+/** A simple App which override run method that takes List of runtime arguments and return IO[ExitCode]
+  * there are two ExitCode, one is success and second is error
+  */
 object FirstCEApp extends IOApp {
   import IOApps._
 
@@ -36,15 +34,12 @@ object FirstCEApp extends IOApp {
 
 }
 
-/**
- * A simple App which override run method that doesn't take any argument and return IO[Unit]
- * our program also returning IO[Unit]
- * just use .void function on any IO it will return the IO[Unit]
- * 
- */
+/** A simple App which override run method that doesn't take any argument and return IO[Unit]
+  * our program also returning IO[Unit]
+  * just use .void function on any IO it will return the IO[Unit]
+  */
 object MySimpleApp extends IOApp.Simple {
   import IOApps._
 
   override def run = program
 }
-

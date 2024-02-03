@@ -5,10 +5,6 @@ lazy val root = project
   .settings(
     name := "cats-effect",
     version := "0.1.0",
-
     scalaVersion := scala3Version,
-
     libraryDependencies ++= Seq(
-      "org.typelevel" %% "cats-effect" % "3.2.0",
-    )
-  )
+      "org.typelevel" %% "cats-effect" % "3.2.0"))

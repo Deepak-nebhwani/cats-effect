@@ -6,7 +6,8 @@ object IOIntroductionPractice {
   // 1 - sequence two IOs and take the result of the LAST one
   // hint: use flatMap
   def sequenceTakeLast[A, B](ioa: IO[A], iob: IO[B]): IO[B] = {
-    for {_ <- ioa
+    for {
+      _ <- ioa
       result <- iob
     } yield result
   }

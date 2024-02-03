@@ -6,9 +6,8 @@ import scala.io.StdIn
 
 object IOIntroduction {
 
-  /**
-   * https://typelevel.org/cats-effect/api/3.x/cats/effect/IO.html
-   */
+  /** https://typelevel.org/cats-effect/api/3.x/cats/effect/IO.html
+    */
   // IO
   val ourFirstIO: IO[Int] = IO.pure(42) // arg that should not have side effects
 
@@ -50,10 +49,8 @@ object IOIntroduction {
   def smallProgram_v2(): IO[Unit] =
     (IO(StdIn.readLine()), IO(StdIn.readLine())).mapN(_ + _).map(println)
 
-
-  /**
-   * Exercises
-   */
+  /** Exercises
+    */
 
   // 1 - sequence two IOs and take the result of the LAST one
   // hint: use flatMap

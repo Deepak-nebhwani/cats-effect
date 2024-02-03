@@ -46,7 +46,7 @@ object PolymorphicAsync extends IOApp.Simple {
 
   val asyncMeaningOfLifeComplex: IO[Int] = IO.async { (cb: Callback[Int]) =>
     IO {
-      threadPool.execute{ () =>
+      threadPool.execute { () =>
         println(s"[${Thread.currentThread().getName}] Computing an async MOL")
         cb(Right(42))
       }
@@ -55,7 +55,7 @@ object PolymorphicAsync extends IOApp.Simple {
 
   val asyncMeaningOfLifeComplex_v2: IO[Int] = asyncIO.async { (cb: Callback[Int]) =>
     IO {
-      threadPool.execute{ () =>
+      threadPool.execute { () =>
         println(s"[${Thread.currentThread().getName}] Computing an async MOL")
         cb(Right(42))
       }
@@ -63,16 +63,16 @@ object PolymorphicAsync extends IOApp.Simple {
   } // same
 
   val myExecutionContext = ExecutionContext.fromExecutorService(threadPool)
-  val asyncMeaningOfLife_v3 = asyncIO.evalOn(IO(42).debug, myExecutionContext).guarantee(IO(threadPool.shutdown()))
+  val asyncMeaningOfLife_v3 =
+    asyncIO.evalOn(IO(42).debug, myExecutionContext).guarantee(IO(threadPool.shutdown()))
 
   // never
   val neverIO = asyncIO.never
 
-  /**
-   * Exercises
-   * 1 - implement never and async_ in terms of the big async.
-   * 2 - tuple two effects with different requirements.
-   */
+  /** Exercises
+    * 1 - implement never and async_ in terms of the big async.
+    * 2 - tuple two effects with different requirements.
+    */
   def firstEffect[F[_]: Concurrent, A](a: A): F[A] = Concurrent[F].pure(a)
   def secondEffect[F[_]: Sync, A](a: A): F[A] = Sync[F].pure(a)
 
@@ -83,7 +83,6 @@ object PolymorphicAsync extends IOApp.Simple {
     first <- firstEffect(a)
     second <- secondEffect(a)
   } yield (first, second)
-
 
   override def run = ???
 }

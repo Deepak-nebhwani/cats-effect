@@ -11,7 +11,7 @@ import scala.concurrent.duration.*
 import scala.language.postfixOps
 object FiberPractice extends IOApp.Simple {
 
-  val io1 =  IO("first IO").debug
+  val io1 = IO("first IO").debug
   val mol = IO(42).debug
 
   val fib = IO.raiseError(new RuntimeException("failure"))
@@ -24,7 +24,7 @@ object FiberPractice extends IOApp.Simple {
   } yield failedJoinedResult
 
   val transformedFiberResult = execute.flatMap {
-    case Succeeded(result) => result
+    case Succeeded(result)  => result
     case Outcome.Errored(e) => IO(e)
     case Outcome.Canceled() => IO("canceled")
   }
@@ -40,28 +40,24 @@ object FiberPractice extends IOApp.Simple {
       r2 <- fb2.join
     } yield (r1, r2)
     result.flatMap {
-      case (Succeeded(v1), Succeeded(v2)) => v1.flatMap(v => v2.map((v, _)))
-      case (Errored(e1), _) => IO.raiseError(e1)
-      case (_, Errored(e2)) => IO.raiseError(e2)
+      case (Succeeded(v1), Succeeded(v2))    => v1.flatMap(v => v2.map((v, _)))
+      case (Errored(e1), _)                  => IO.raiseError(e1)
+      case (_, Errored(e2))                  => IO.raiseError(e2)
       case (Canceled(), _) | (_, Canceled()) => IO.raiseError(new RuntimeException("Cancelled"))
     }
   }
 
-  def bracketTestWithFailure = IO(new Connection("test/url/string")).bracket(
-    conn =>
-      for {
-        con <- conn.open()
-        result <- IO.raiseError[String](new RuntimeException("a proper fail"))
-        after <- IO("after exception")
-      } yield con
-  )(conn => conn.close().void)
+  def bracketTestWithFailure = IO(new Connection("test/url/string")).bracket(conn =>
+    for {
+      con <- conn.open()
+      result <- IO.raiseError[String](new RuntimeException("a proper fail"))
+      after <- IO("after exception")
+    } yield con)(conn => conn.close().void)
     .handleErrorWith {
       case x: RuntimeException => IO("I am failed")
     }
 
-
-
- override def run =
+  override def run =
 //   bracketTest.flatMap(IO.println)
-   bracketTestWithFailure.void
+    bracketTestWithFailure.void
 }
